@@ -264,6 +264,9 @@ class MenuView: UIScrollView {
         if menuItemViews.count == options.minumumSupportedViewCount {
             return 0.0
         }
+        if contentSize.width <= frame.width {
+            return 0.0
+        }
         let ratio = CGFloat(currentPage) / CGFloat(menuItemViews.count - 1)
         return (contentSize.width - frame.width) * ratio
     }
