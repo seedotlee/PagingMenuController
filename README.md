@@ -14,22 +14,17 @@ See [CHANGELOG](https://github.com/kitasuke/PagingMenuController/blob/master/CHA
 
 ## Description
 
-### Standard menu mode
-#### Flexible width
+### Standard mode with flexible item width
 
 <img src="https://raw.githubusercontent.com/wiki/kitasuke/PagingMenuController/images/demo4.gif" width="160" height="284">
 
-#### Fixed width
+### Segmented control mode
 
 <img src="https://raw.githubusercontent.com/wiki/kitasuke/PagingMenuController/images/demo2.gif" width="284" height="160">
 
-### Segmented control mode
+### Infinite mode with fixed item width
 
 <img src="https://raw.githubusercontent.com/wiki/kitasuke/PagingMenuController/images/demo3.gif" width="160" height="284">
-
-### Infinite mode
-
-To be updated soon...
 
 ## Customization
 
@@ -86,6 +81,10 @@ menuItemMargin: CGFloat
 ```Swift
 animationDuration: NSTimeInterval
 ```
+* decelerating rate for menu view
+```swift
+deceleratingRate: CGFloat
+```
 * menu display mode and scrolling mode
 ```Swift
 menuDisplayMode: MenuDisplayMode
@@ -93,7 +92,7 @@ menuDisplayMode: MenuDisplayMode
 public enum MenuDisplayMode {
     case Standard(widthMode: MenuItemWidthMode, centerItem: Bool, scrollingMode: MenuScrollingMode)
     case SegmentedControl
-    case Infinite(widthMode: MenuItemWidthMode) // Requires three paging views al least
+    case Infinite(widthMode: MenuItemWidthMode) // Requires three paging views at least
 }
 
 public enum MenuItemWidthMode {
@@ -142,6 +141,8 @@ pagingMenuController.setup(viewControllers: viewControllers, options: options)
 ```
 * You should add `ContainerView` into your view controller's view and set `PagingMenuController` as the embedded view controller's class
 
+See `PagingMenuControllerDemo` target in demo project for more details
+
 ### Coding only
 ```Swift
 let viewController = UIViewController()
@@ -158,6 +159,8 @@ self.view.addSubview(pagingMenuController.view)
 pagingMenuController.didMoveToParentViewController(self)
 ```
 
+See `PagingMenuControllerDemo2` target in demo project for more details
+
 ### Delegate methods (optional)
 
 ```Swift
@@ -172,6 +175,13 @@ func didMoveToMenuPage(page: Int) {
 }
 ```
 
+### Moving to a menu tag programatically 
+
+```swift
+// if you pass a nonexistent page number, it'll be ignored
+pagingMenuController.moveToMenuPage(1, animated: true)
+```
+
 ## Requirements
 
 iOS8+  
@@ -182,7 +192,7 @@ Xcode 6.3+
 Follow [Manual Installation](#manual)
 
 *Swift 1.2*   
-Please use swift_1.2 branch, but it doesn't have full features.
+Please use swift_1.2 branch, but it doesn't have full features. **It's no longer maintained...**
 
 Podfile  
 `pod 'PagingMenuController', :git => 'https://github.com/kitasuke/PagingMenuController', :branch => 'swift_1.2'

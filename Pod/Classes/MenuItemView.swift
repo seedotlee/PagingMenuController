@@ -8,12 +8,11 @@
 
 import UIKit
 
-class MenuItemView: UIView {
+public class MenuItemView: UIView {
     
+    public private(set) var titleLabel: UILabel!
     private var options: PagingMenuOptions!
     private var title: String!
-    private var titleLabel: UILabel!
-    private var titleLabelFont: UIFont!
     private var widthLabelConstraint: NSLayoutConstraint!
     
     // MARK: - Lifecycle
@@ -29,7 +28,7 @@ class MenuItemView: UIView {
         layoutLabel()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -50,13 +49,13 @@ class MenuItemView: UIView {
     // MARK: - Label changer
     
     internal func focusLabel(selected: Bool) {
-        if case .RoundRect(_, _, _, _) = options.menuItemMode {
+        if case .RoundRect = options.menuItemMode {
             backgroundColor = UIColor.clearColor()
         } else {
             backgroundColor = selected ? options.selectedBackgroundColor : options.backgroundColor
         }
         titleLabel.textColor = selected ? options.selectedTextColor : options.textColor
-        titleLabelFont = selected ? options.selectedFont : options.font
+        titleLabel.font = selected ? options.selectedFont : options.font
 
         // adjust label width if needed
         let labelSize = calculateLableSize()
@@ -66,7 +65,7 @@ class MenuItemView: UIView {
     // MARK: - Constructor
     
     private func setupView() {
-        if case .RoundRect(_, _, _, _) = options.menuItemMode {
+        if case .RoundRect = options.menuItemMode {
             backgroundColor = UIColor.clearColor()
         } else {
             backgroundColor = options.backgroundColor
@@ -78,8 +77,7 @@ class MenuItemView: UIView {
         titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.textColor = options.textColor
-        titleLabelFont = options.font
-        titleLabel.font = titleLabelFont
+        titleLabel.font = options.font
         titleLabel.numberOfLines = 1
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.userInteractionEnabled = true
@@ -92,8 +90,8 @@ class MenuItemView: UIView {
         
         let labelSize = calculateLableSize()
 
-        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[label]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[label]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[label]|", options: [], metrics: nil, views: viewsDictionary)
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[label]|", options: [], metrics: nil, views: viewsDictionary)
         
         NSLayoutConstraint.activateConstraints(horizontalConstraints + verticalConstraints)
         
@@ -104,15 +102,15 @@ class MenuItemView: UIView {
     // MARK: - Size calculator
     
     private func calculateLableSize(size: CGSize = UIScreen.mainScreen().bounds.size) -> CGSize {
-        let labelSize = NSString(string: title).boundingRectWithSize(CGSizeMake(CGFloat.max, CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: titleLabelFont], context: nil).size
+        let labelSize = NSString(string: title).boundingRectWithSize(CGSizeMake(CGFloat.max, CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: titleLabel.font], context: nil).size
 
         let itemWidth: CGFloat
         switch options.menuDisplayMode {
-        case .Standard(let widthMode, _, _):
+        case let .Standard(widthMode, _, _):
             itemWidth = labelWidth(labelSize, widthMode: widthMode)
         case .SegmentedControl:
             itemWidth = size.width / CGFloat(options.menuItemCount)
-        case .Infinite(let widthMode):
+        case let .Infinite(widthMode):
             itemWidth = labelWidth(labelSize, widthMode: widthMode)
         }
         
@@ -123,7 +121,7 @@ class MenuItemView: UIView {
     private func labelWidth(labelSize: CGSize, widthMode: PagingMenuOptions.MenuItemWidthMode) -> CGFloat {
         switch widthMode {
         case .Flexible: return ceil(labelSize.width)
-        case .Fixed(let width): return width
+        case let .Fixed(width): return width
         }
     }
     

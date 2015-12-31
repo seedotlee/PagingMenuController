@@ -1,3 +1,54 @@
+# 0.7.7 Release notes (2015/12-20)
+
+### Enhancements
+
+- Make `moveToMenuPage` method public
+
+# 0.7.6 Release notes (2015/11-30)
+
+### Enhancements
+
+- Enable override classes
+- Memory performance improvements thanks to @benrudhart
+
+# 0.7.5 Release notes (2015/11-2)
+
+### Enhancements
+
+- Significant improvements thanks to @ikesyo
+- Make some properties public read only
+
+# 0.7.4 Release notes (2015/10-24)
+
+### Enhancements
+
+- Small improvements
+
+### Bug fixed
+
+- `selectedFont`
+
+# 0.7.3 Release notes (2015/10-19)
+
+### Bug fixed
+
+- Fix `backgroundColor` with `RoundRect` mode thanks to fabianpimminger
+- `selectedFont` didn't work properly
+
+# 0.7.2 Release notes (2015/10-18)
+
+### Enhancements
+
+- Add `deceleratingRate` for menu view
+
+### Bug fixed
+
+- Fix incorrect reload of content view
+
+### Breaking changes
+
+- Not allowed to subclass PagingMenuController any more
+
 # 0.7.1 Release notes (2015/10-04)
 
 ### Enhancements
